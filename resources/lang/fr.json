@@ -1,0 +1,11 @@
+{
+  "app_title" : "Application de localisation",
+  "header_login" :"Procédez à votre",
+  "label_login" : "Connexion",
+  "button_login" : "Connexion",
+  "label_forgot_password" : "Mot de passe oublié?",
+  "placeholder_email" : "E-mail",
+  "placeholder_password" : "Mot de passe",
+  "error_email": "Veuillez saisir une adresse e-mail valide",
+  "error_password": "Veuillez entrer le mot de passe"
+}

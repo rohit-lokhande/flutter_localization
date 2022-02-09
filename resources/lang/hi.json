@@ -1,0 +1,11 @@
+{
+  "app_title" : "स्थानीयकरण ऐप",
+  "header_login" :"अपने साथ आगे बढ़ें",
+  "label_login" : "लॉग इन करें",
+  "button_login" : "लॉग इन करें",
+  "label_forgot_password" : "पासवर्ड भूल गए?",
+  "placeholder_email" : "ईमेल",
+  "placeholder_password" : "कुंजिका",
+  "error_email": "कृपया वैध ईमेल दर्ज़ करें",
+  "error_password": "कृप्या पास्वर्ड भरो"
+}

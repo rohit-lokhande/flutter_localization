@@ -1,0 +1,11 @@
+{
+  "app_title" : "Localization App",
+  "header_login" :"Proceed with your",
+  "label_login" : "Login",
+  "button_login" : "Login",
+  "label_forgot_password" : "Forgot Password?",
+  "placeholder_email" : "Email",
+  "placeholder_password" : "Password",
+  "error_email": "Please enter valid email",
+  "error_password": "Please enter password"
+}

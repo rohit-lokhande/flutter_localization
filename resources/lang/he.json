@@ -1,0 +1,11 @@
+{
+  "app_title" : "אפליקציית לוקליזציה",
+  "header_login" :"המשך עם שלך",
+  "label_login" : "התחברות",
+  "button_login" : "התחברות",
+  "label_forgot_password" : "שכחת את הסיסמא?",
+  "placeholder_email" : "אימייל",
+  "placeholder_password" : "סיסמה",
+  "error_email": "נא להזין דוא ל חוקי",
+  "error_password": "נא להזין סיסמה"
+}
