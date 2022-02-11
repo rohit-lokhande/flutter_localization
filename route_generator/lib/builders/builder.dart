@@ -1,13 +1,9 @@
 import 'package:build/build.dart';
 import 'package:merging_builder/merging_builder.dart';
-import 'package:researcher_builder/src/generators/class_defination.dart';
+import 'package:route_generator/generators/routes_generator.dart';
+import 'package:route_generator/models/class_definition.dart';
 
-import 'src/generators/add_names_generator.dart';
-
-/// Defines a merging builder.
-/// Honours the options: `input_files`, `output_file`, `header`, `footer`,
-/// and `sort_assets` that can be set in `build.yaml`.
-Builder addNamesBuilder(BuilderOptions options) {
+Builder routeBuilder(BuilderOptions options) {
   final defaultOptions = BuilderOptions({
     'input_files': 'lib/*.dart',
     'output_file': 'lib/output.dart',
@@ -17,7 +13,7 @@ Builder addNamesBuilder(BuilderOptions options) {
   // Apply user set options.
   options = defaultOptions.overrideWith(options);
   return MergingBuilder<ClassDefinition?, LibDir>(
-    generator: AddNamesGenerator(),
+    generator: RoutesGenerator(),
     inputFiles: options.config['input_files'],
     outputFile: options.config['output_file'],
     sortAssets: options.config['sort_assets'],

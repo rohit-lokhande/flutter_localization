@@ -1,14 +1,12 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart' show BuildStep;
 import 'package:merging_builder/merging_builder.dart';
+import 'package:route_generator/annotations/annotations.dart';
+import 'package:route_generator/models/class_definition.dart';
 import 'package:source_gen/source_gen.dart';
 
-import '../add_names.dart';
-import 'class_defination.dart';
-
-class AddNamesGenerator extends MergingGenerator<ClassDefinition?, AddNames> {
+class RoutesGenerator extends MergingGenerator<ClassDefinition?, AppRoute> {
   @override
   ClassDefinition? generateStreamItemForAnnotatedElement(
     Element element,
@@ -19,7 +17,9 @@ class AddNamesGenerator extends MergingGenerator<ClassDefinition?, AddNames> {
       return ClassDefinition(
           displayName: element.displayName,
           classPath: element.source.uri.toString(),
-          route: annotation.objectValue.getField('route')!.toStringValue(),
+          route: annotation.objectValue.getField('path')!.toStringValue(),
+          description:
+              annotation.objectValue.getField('description')!.toStringValue(),
           constructors: element.constructors,
           fields: element.fields);
     }
@@ -30,77 +30,63 @@ class AddNamesGenerator extends MergingGenerator<ClassDefinition?, AddNames> {
   @override
   FutureOr<String> generateMergedContent(
       Stream<ClassDefinition?> stream) async {
-    final b = StringBuffer();
-    b.writeln("import 'package:flutter/material.dart';");
+    final buffer = StringBuffer();
+    buffer.writeln("import 'package:flutter/material.dart';");
     List<ClassDefinition?> classes = [];
     await for (final values in stream) {
       classes.add(values);
-      b.writeln("import '${values!.classPath}';");
+      buffer.writeln("import '${values!.classPath}';");
     }
-    b.writeln('class AppRoutes {');
+    buffer.writeln('class Routes {');
     for (final value in classes) {
-      if (value!.fields!.isNotEmpty) {
-        b.writeln(
+      buffer.writeln("//${value!.description}");
+      if (value.fields!.isNotEmpty) {
+        buffer.writeln(
             'static void navigateTo${value.constructors!.first.displayName}(BuildContext context,');
-
         List<String> constructorParameters =
             _getConstructorParameters(value.constructors!.first.parameters);
-        b.write("${constructorParameters.join(",")}");
-
-        b.write("){");
-
-        b.writeln(
+        buffer.write(constructorParameters.join(","));
+        buffer.write("){");
+        buffer.writeln(
             "Navigator.push(context,MaterialPageRoute(builder: (context) =>  ${value.constructors!.first.displayName}(");
         List<String> parameters =
             _getParameterList(value.constructors!.first.parameters);
-
-        b.write("${parameters.join(",")}");
-
-        b.write(')),);');
-
-        b.writeln('}');
+        buffer.write(parameters.join(","));
+        buffer.write(')),);');
+        buffer.writeln('}');
       } else {
-
-        b.writeln(
+        buffer.writeln(
             'static void navigateTo${value.constructors!.first.displayName}(BuildContext context,');
-        b.write("){");
-
-        b.writeln(
+        buffer.write("){");
+        buffer.writeln(
             "Navigator.push(context,MaterialPageRoute(builder: (context) =>  ${value.constructors!.first.displayName}(");
-
-        b.write(')),);');
-
-        b.writeln('}');
-
-
+        buffer.write(')),);');
+        buffer.writeln('}');
       }
     }
-    b.writeln('}');
-
-    return b.toString();
+    buffer.writeln('}');
+    return buffer.toString();
   }
 
   List<String> _getParameterList(List<ParameterElement> parameterElement) {
     List<String> parameters = [];
-
-    parameterElement.forEach((e) {
-      if(e.name.toLowerCase() != 'key') {
-        if(e.isOptional){
+    for (var e in parameterElement) {
+      if (e.name.toLowerCase() != 'key') {
+        if (e.isOptional) {
           parameters.add("${e.name}: ${e.name}");
-        }else if(e.isRequiredNamed){
+        } else if (e.isRequiredNamed) {
           parameters.add("${e.name}: ${e.name}");
-        }else{
+        } else {
           parameters.add(e.name);
         }
       }
-    });
-
+    }
     return parameters;
   }
 
   List<String> _getConstructorParameters(List<ParameterElement> parameters) {
     List<String> constructorParameters = [];
-    parameters.forEach((e) {
+    for (var e in parameters) {
       if (e.type.isDartCoreString && e.isOptional) {
         constructorParameters.add('String? ${e.displayName}');
       } else if (e.type.isDartCoreInt) {
@@ -113,8 +99,7 @@ class AddNamesGenerator extends MergingGenerator<ClassDefinition?, AddNames> {
         constructorParameters.add(
             '${e.type.getDisplayString(withNullability: false)} ${e.displayName}');
       }
-    });
-
+    }
     return constructorParameters;
   }
 }

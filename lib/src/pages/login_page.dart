@@ -3,9 +3,13 @@ import 'package:app_localization/src/config/localized_strings.dart';
 import 'package:app_localization/src/localization/index.dart';
 import 'package:app_localization/src/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:route_generator/route_generator.dart';
 
+@AppRoute("login",description: 'login page route')
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final String? data;
+  final int val;
+  const LoginPage( {Key? key, this.data,required this.val}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();

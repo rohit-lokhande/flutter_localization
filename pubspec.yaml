@@ -16,6 +16,10 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   intl: ^0.17.0
+#  researcher_builder:
+#    path: ./researcher_builder
+  route_generator:
+    path: ./route_generator
 
 
 dev_dependencies:
@@ -24,6 +28,7 @@ dev_dependencies:
 
   flutter_lints: ^1.0.0
   mustache_template: ^2.0.0
+  build_runner: '>=0.9.1'
 
 flutter:
 

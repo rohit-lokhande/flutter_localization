@@ -6,6 +6,7 @@ class ClassDefinition {
   final List<FieldElement>? fields;
   final String? route;
   final String classPath;
+  final String? description;
 
   ClassDefinition({
     required this.displayName,
@@ -13,5 +14,6 @@ class ClassDefinition {
     this.constructors,
     this.fields,
     this.route,
+    this.description,
   });
 }

@@ -1,4 +1,5 @@
 /// Annotation for testing purposes.
 class AddNames {
-  const AddNames();
+  final String route;
+  const AddNames(this.route);
 }

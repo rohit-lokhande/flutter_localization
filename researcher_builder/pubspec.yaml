@@ -9,11 +9,8 @@ dependencies:
   analyzer: ^2.7.0
   build: ^2.1.1
   build_config: ^1.0.0
-  merging_builder:
-    path: ../../
+  merging_builder: ^0.2.3
   quote_buffer: ^0.2.3
-  researcher:
-    path: ../researcher
   source_gen: ^1.1.1
 
 dev_dependencies:
